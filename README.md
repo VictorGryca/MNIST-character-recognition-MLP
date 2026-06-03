@@ -1,0 +1,1 @@
+# Character recognition using Multi Layer Perceptrons and MNIST dataset
