@@ -20,3 +20,6 @@ fazendo backprop do XOR:
 
     simplesmente confundo b2 com b1, w1 com W1 e trava tudo. confundo os casos de quando usar cada tipo de multiplicacao 
 
+
+    por um milagre a rede funcionou da primeira vez. mas dai depois nao funcionou mais e o problema era a falta de uma random seed. a rede convergia errado em algumas seeds. até onde pesquisei isso eh normal nesse caso do XOR
+
