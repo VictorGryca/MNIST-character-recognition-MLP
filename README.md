@@ -18,3 +18,5 @@ fui evoluindo no desenvolvimento das equacoes do backprop:
 fazendo backprop do XOR:
     dificuldade em entender a transposta e de lembrar que o erro vem das camadas mas profundas. o W1 é corrigido pelo W2 
 
+    simplesmente confundo b2 com b1, w1 com W1 e trava tudo. confundo os casos de quando usar cada tipo de multiplicacao 
+
