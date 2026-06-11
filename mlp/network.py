@@ -63,3 +63,26 @@ class MLP:
         self.W3, self.b3 = self.optimizer.update(self.W3, self.b3, dW3, db3)
         self.W2, self.b2 = self.optimizer.update(self.W2, self.b2, dW2, db2)
         self.W1, self.b1 = self.optimizer.update(self.W1, self.b1, dW1, db1)
+
+    def treinar(self, X_train, y_train, epocas=10):
+        n = len(X_train)
+
+        for epoca in range(epocas):
+            indices = np.random.permutation(n)
+            X_train = X_train[indices]
+            y_train = y_train[indices]
+
+            total_loss = 0
+
+            for i in range(n):
+                x = X_train[i]
+                y = y_train[i]
+
+                y_pred = self.forward(x)
+                total_loss += self.loss_fn.cross_entropy(y_pred, y)
+                self.backprop(x, y)
+
+            print(f"epoca {epoca+1}/{epocas} — loss: {total_loss/n:.4f}")
+
+    def predicao(self, x):
+        return np.argmax(self.forward(x))
