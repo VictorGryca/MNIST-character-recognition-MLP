@@ -15,3 +15,6 @@ fui evoluindo no desenvolvimento das equacoes do backprop:
     fui quebrando o gradiente de w3 e w2. entendendo as derivadas parciais. comecando pelo output entendo o pq juntar cross-entropy com softmax. a derivada parcial fica bonita e facil. 
     
 
+fazendo backprop do XOR:
+    dificuldade em entender a transposta e de lembrar que o erro vem das camadas mas profundas. o W1 é corrigido pelo W2 
+
