@@ -35,3 +35,31 @@ class MLP:
         self.a3 = self.act.softmax(self.z3)
 
         return self.a3
+    
+
+    def backprop(self, x, y_true):
+        # delta da saída: softmax + cross-entropy simplifica para a3 - y
+        delta3 = self.a3 - y_true
+
+        # gradientes da camada de saida
+        dW3 = np.outer(delta3, self.a2)
+        db3 = delta3
+
+        # delta da camada 2
+        delta2 = (self.W3.T @ delta3) * self.act.relu_derivative(self.z2)
+
+        # gradientes da camada 2
+        dW2 = np.outer(delta2, self.a1)
+        db2 = delta2
+
+        # delta da camada 1
+        delta1 = (self.W2.T @ delta2) * self.act.relu_derivative(self.z1)
+
+        # gradientes da camada 1
+        dW1 = np.outer(delta1, x)
+        db1 = delta1
+
+        # atualiza todos os pesos
+        self.W3, self.b3 = self.optimizer.update(self.W3, self.b3, dW3, db3)
+        self.W2, self.b2 = self.optimizer.update(self.W2, self.b2, dW2, db2)
+        self.W1, self.b1 = self.optimizer.update(self.W1, self.b1, dW1, db1)
