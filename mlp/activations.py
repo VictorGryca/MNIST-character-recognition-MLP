@@ -3,7 +3,7 @@ import numpy as np
 class Activations:
 
     def derivada_relu(self, z):
-        return (z > 0).astype(float) | # soh a derivada da relu mesmo
+        return (z > 0).astype(float) # soh a derivada da relu mesmo
 
     def relu(self, z):
         return np.maximum(0, z)

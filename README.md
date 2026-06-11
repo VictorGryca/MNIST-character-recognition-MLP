@@ -2,7 +2,7 @@
 
 ## Como rodar
 
-Instala as dependências:
+Instala as dependencias:
 
 ```
 pip install numpy matplotlib tensorflow
@@ -32,61 +32,58 @@ def one_hot(y, n=10):
     return out
 
 model = MLP(lr=0.01)
-model.train(X_train, one_hot(y_train), epochs=10)
+model.treinar(X_train, one_hot(y_train), X_test, y_test, epocas=10)
 ```
 
 ## Arquitetura escolhida
 
 A rede tem 3 camadas no total:
 
-- Entrada: 784 neurônios (pixels da imagem 28x28 achatados)
-- Camada oculta 1: 128 neurônios, ativação ReLU
-- Camada oculta 2: 128 neurônios, ativação ReLU
-- Saída: 10 neurônios, ativação Softmax (uma probabilidade por dígito)
+- Entrada: 784 neuronios (pixels da imagem 28x28 achatados)
+- Camada oculta 1: 128 neuronios, ativacao ReLU
+- Camada oculta 2: 128 neuronios, ativacao ReLU
+- Saida: 10 neuronios, ativacao Softmax (uma probabilidade por digito)
 
-Usei ReLU nas camadas ocultas porque ela não satura para valores positivos, o que evita o problema de gradientes que somem durante o backprop. O Softmax na saída converte os scores brutos numa distribuição de probabilidade onde os 10 valores somam 1, o que faz sentido para classificação multi-classe.
+Usei ReLU nas camadas ocultas porque ela nao satura para valores positivos, o que evita o problema de gradientes que somem durante o backprop. O Softmax na saida converte os scores brutos numa distribuicao de probabilidade onde os 10 valores somam 1, o que faz sentido para classificacao multi-classe.
 
-128 neurônios por camada é um tamanho razoável para MNIST: grande o suficiente para aprender as representações, pequeno o suficiente para treinar rápido.
+128 neuronios por camada e um tamanho razoavel para MNIST: grande o suficiente para aprender as representacoes, pequeno o suficiente para treinar rapido.
 
-### Cálculos da rede principal (MNIST)
+### Calculos da rede principal (MNIST)
 
-![cálculo 1](results/calculo_mnist_1.jpg)
-![cálculo 2](results/calculo_mnist_2.jpg)
-![cálculo 3](results/calculo_mnist_3.jpg)
-![cálculo 4](results/calculo_mnist_4.jpg)
-![cálculo 5](results/calculo_mnist_5.jpg)
+![calculo 1](results/calculo_mnist_1.jpg)
+![calculo 2](results/calculo_mnist_2.jpg)
+![calculo 3](results/calculo_mnist_3.jpg)
+![calculo 4](results/calculo_mnist_4.jpg)
+![calculo 5](results/calculo_mnist_5.jpg)
 
-### Cálculos da rede XOR
+### Calculos da rede XOR
 
-![cálculo XOR 1](results/calculo_xor_1.jpg)
-![cálculo XOR 2](results/calculo_xor_2.jpg)
-![cálculo XOR 3](results/calculo_xor_3.jpg)
+![calculo XOR 1](results/calculo_xor_1.jpg)
+![calculo XOR 2](results/calculo_xor_2.jpg)
+![calculo XOR 3](results/calculo_xor_3.jpg)
 
 ## Resultados
 
-_a preencher após treino_
+Curva de loss e acuracia ao longo do treinamento:
 
-Acurácia no teste: XX%
-
-Curva de loss:
-
-_(inserir plot)_
+![curvas de treinamento](results/curvas_treinamento.png)
 
 Tabela comparativa de experimentos:
 
-| configuração | lr | épocas | acurácia |
+| configuracao | lr | epocas | acuracia |
 |---|---|---|---|
-| 128-128, ReLU | 0.01 | 10 | XX% |
-| _experimento 2_ | | | |
+| 128-128, ReLU | 0.01 | 2 | 96.82% |
+| 128-128, ReLU | 0.02 | 2 | 96.47% |
+| 128-128, ReLU | 0.01 | 4 | 97.44% |
 
-## Decisões e dificuldades
+## Decisoes e dificuldades
 
-A decisão mais difícil foi entender como o backprop funciona de verdade, não só decorar as fórmulas. Levei um tempo para entender que o gradiente de cada camada vem da camada seguinte, e que a transposta aparece porque a direção da transformação inverte. Comecei achando que era só resolver a equação ao contrário, mas não é isso.
+A decisao mais dificil foi entender como o backprop funciona de verdade, nao so decorar as formulas. Levei um tempo para entender que o gradiente de cada camada vem da camada seguinte, e que a transposta aparece porque a direcao da transformacao inverte. Comecei achando que era so resolver a equacao ao contrario, mas nao e isso.
 
-Tentei implementar o backprop do XOR calculando os deltas na ordem errada: atualizava W2 antes de usá-lo para calcular delta1. A rede até convergiu em alguns casos, mas era um bug real que só não apareceu porque o XOR é simples e o learning rate era pequeno. Para uma rede maior o erro teria acumulado.
+Tentei implementar o backprop do XOR calculando os deltas na ordem errada: atualizava W2 antes de usa-lo para calcular delta1. A rede ate convergiu em alguns casos, mas era um bug real que so nao apareceu porque o XOR e simples e o learning rate era pequeno. Para uma rede maior o erro teria acumulado.
 
-Outro problema que me travou foi a falta de uma seed aleatória. A rede funcionou na primeira tentativa, dai parei de conseguir reproduzir o resultado. Pesquisando, descobri que é comportamento normal do XOR com redes pequenas: algumas inicializações levam a mínimos locais ruins e a rede não converge. Resolver foi simples, mas me fez entender na prática por que reprodutibilidade importa.
+Outro problema que me travou foi a falta de uma seed aleatoria. A rede funcionou na primeira tentativa, dai parei de conseguir reproduzir o resultado. Pesquisando, descobri que e comportamento normal do XOR com redes pequenas: algumas inicializacoes levam a minimos locais ruins e a rede nao converge. Resolver foi simples, mas me fez entender na pratica por que reprodutibilidade importa.
 
-Também confundi bastante quando usar multiplicação matricial (@) e quando usar multiplicação elemento a elemento (*). Fui entendendo conforme implementei: @ é para combinar camadas (forward e backprop pelo W.T), * é para aplicar a derivada da ativação elemento por elemento.
+Tambem confundi bastante quando usar multiplicacao matricial (@) e quando usar multiplicacao elemento a elemento (*). Fui entendendo conforme implementei: @ e para combinar camadas (forward e backprop pelo W.T), * e para aplicar a derivada da ativacao elemento por elemento.
 
-Se fosse refazer do zero, começaria pelo XOR mais cedo e com mais atenção, em vez de pular direto para o MNIST. E escreveria o README enquanto desenvolvia, não depois.
+Se começasse do zero provavelmente teria elaborado as equações do XOR primeiro. Mas de qualquer forma ter feito ele no notebook inteiro antes do MNIST ja ajudou.
