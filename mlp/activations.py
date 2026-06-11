@@ -1,6 +1,6 @@
 import numpy as np 
 
-class activations:
+class Activations:
 
     def derivada_relu(self, z):
         return (z > 0).astype(float) | # soh a derivada da relu mesmo

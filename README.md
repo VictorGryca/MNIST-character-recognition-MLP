@@ -23,3 +23,7 @@ fazendo backprop do XOR:
 
     por um milagre a rede funcionou da primeira vez. mas dai depois nao funcionou mais e o problema era a falta de uma random seed. a rede convergia errado em algumas seeds. até onde pesquisei isso eh normal nesse caso do XOR
 
+
+
+programando o MNIST:
+    
